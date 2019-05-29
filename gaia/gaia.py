@@ -1,22 +1,21 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-
 import astropy.coordinates as coord
 import astropy.units as u
 from astropy.table import Table
 from astropy.io import fits
 from astroquery.gaia import Gaia
-
 import os
 
-class gaia_tools(object):
+class tools(object):
     
     def __init__(self, df):
         self.df = df
         self.path = os.getcwd()
         self.OC = pd.read_csv(self.path+'\\OC_catalouge.csv') 
-        
+        self.df['dist_pc'] = 1000/self.df['parallax']
+
     # 'CMD','radec', 'lb', mov_clust
     def plot(self, plot_type):  
         if plot_type == 'radec':
@@ -32,7 +31,7 @@ class gaia_tools(object):
             b = coord.Angle(self.df['b'].values*u.degree)
             fig = plt.figure(figsize=(12,9))
             ax = fig.add_subplot(111, projection="mollweide")
-            ax.scatter(l.radian, b.radian, color = 'k', s = 1, alpha = .2)
+            ax.scatter(l.radian, b.radian, color = 'k', s = 1, alpha = .02)
         elif plot_type == 'CMD':
             def abs_mag(x,y):
                 return x - (5 * (np.log10(y/10)))
@@ -59,7 +58,7 @@ class gaia_tools(object):
             plt.xlabel('ra')
             
         # automatically titles plot in case of singular cluster
-        name = Cluster(self.df).cross_id()['name']
+        name = tools(self.df).cross_id()['name']
         if len(name) == 1:
             plt.title(name.iloc[0])
         plt.show()
@@ -76,7 +75,7 @@ class gaia_tools(object):
                        (OC['distance'] > DIST-10) & (OC['distance'] <= DIST+10)]
         return identified
 
-class gaia_query(object):
+class query(object):
     
     def __init__(self, my_query):
         self.my_query = my_query
@@ -102,3 +101,7 @@ class gaia_query(object):
                 clean_word = word.replace('gaia.','')
                 print(clean_word, end = ' ')
             i += 1
+
+test_cluster = pd.read_csv(os.path.join(os.path.dirname(__file__),'example_data.csv'))
+
+
