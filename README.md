@@ -4,7 +4,7 @@
 
 # Summary
 
-This is an ongoing project to use statistical clustering algorithms and neural networks to detect new open clusters in the Milky Way. With over 1.3 billion stars cataloged, the European Space Agency's satellite, Gaia, has collected the most complete kinematic map of the local galaxy to date. Using clustering and classification algorithms such as DBSCAN and neural networks respectively, it is possible to extract individual star clusters from the galactic disk. 
+This is an ongoing project to detect new open clusters in the Milky Way. With over 1.3 billion stars cataloged, the European Space Agency's satellite, Gaia, has collected the most complete kinematic map of the local galaxy to date. Using clustering and classification algorithms such as DBSCAN and neural networks respectively, it is possible to extract individual star clusters from the galactic disk. 
 
 In the gaia_tools module are a series of tools that allow for custom generation of training data for network training as well as some visualization tools to aid this process. After network training, I impliment DBSCAN on a volume of space to extract known clusters using astrometric data then test the accuracy of the model on known clusters and cluster candidates. I find 2 candidates with .90+ probability of being true clusters. 
 
